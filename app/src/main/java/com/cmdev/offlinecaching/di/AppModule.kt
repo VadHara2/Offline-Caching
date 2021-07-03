@@ -1,6 +1,9 @@
 package com.cmdev.offlinecaching.di
 
+import android.app.Application
+import androidx.room.Room
 import com.cmdev.offlinecaching.api.RestaurantApi
+import com.cmdev.offlinecaching.data.RestaurantDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,4 +29,10 @@ object AppModule {
     @Singleton
     fun provideRestaurantApi(retrofit: Retrofit): RestaurantApi =
         retrofit.create(RestaurantApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideDatabase(app: Application) : RestaurantDatabase =
+        Room.databaseBuilder(app, RestaurantDatabase::class.java, "restaurant_database")
+            .build()
 }
